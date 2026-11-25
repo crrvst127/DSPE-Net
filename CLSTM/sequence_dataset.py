@@ -18,16 +18,19 @@ def read_sample(path, scale):
     return torch.from_numpy(sample.astype(np.float32) / scale).unsqueeze(0).unsqueeze(0)
 
 
+def ordered_samples(folder):
+    if folder.is_file():
+        lines = folder.read_text(encoding="utf-8-sig").splitlines()
+        return [folder.parent / line.strip() for line in lines if line.strip()]
+    return sorted(folder.glob("*.npy"), key=lambda p: [
+        int(s) if s.isdigit() else s for s in re.split(r"(\d+)", p.name)
+    ])
+
+
 class SamplePairs(Dataset):
     def __init__(self, folder, scale):
         self.scale = scale
-        if folder.is_file():
-            paths = folder.read_text(encoding="utf-8-sig").splitlines()
-            self.samples = [folder.parent / line.strip() for line in paths if line.strip()]
-        else:
-            self.samples = sorted(folder.glob("*.npy"), key=lambda p: [
-                int(s) if s.isdigit() else s for s in re.split(r"(\d+)", p.name)
-            ])
+        self.samples = ordered_samples(folder)
         if len(self.samples) < 2:
             raise ValueError(f"{folder}: adjacent pairs require at least two samples")
 

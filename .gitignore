@@ -1,3 +1,10 @@
 .idea/
 __pycache__/
 *.py[cod]
+
+/data/**/*
+!/data/**/
+!/data/**/.gitkeep
+!/data/README.md
+/outputs/*
+!/outputs/.gitkeep
