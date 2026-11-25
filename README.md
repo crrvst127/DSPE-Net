@@ -1,5 +1,11 @@
 # DSPE-Net
 
+本仓库提供以下论文的代码实现：
+
+**DSPE-Net: From Satellite Imagery to ISW Prediction via Local Symbolic Regularization**
+
+Rui Cai, Saheya Barintag, Yulong Bao, Xiaofeng Li
+
 DSPE-Net 用于海洋内孤立波的多步预测。项目包含 Conv-LSTM 预测、局部方程辨识和 PINN 校正三个模块，可从一幅观测出发，生成后续各步的波场预测。
 
 ## 数据准备
